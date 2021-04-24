@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
+import './App.css'
+import Navbar from './components/navbar'
+import InputField from './components/inputField'
+import TodoContainer from './components/todoContainer'
+const App = () => {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [input,setInput] = useState([]);
+    const [text,setText] = useState("");
+
+    const setArray = () => {
+        setInput([...input,text])
+        setText("");
+    }
+    const editFun = (idx) => {
+        setText(input[idx])
+        input.splice(idx,1);
+        setInput([...input])
+    }
+    const removeFun = (idx) => {
+        input.splice(idx,1);
+        setInput([...input])
+    }
+    
+    return(
+        <div className="app">
+            <Navbar/>
+            <InputField set={setText} text={text} setArray={setArray}/>
+            <TodoContainer data={input} editFun={editFun} removeFun={removeFun}/>
+        </div>
+    )
 }
 
 export default App;
